@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import prisma from "@/lib/prisma";
+
 // name: "",
 // email: "",
 // expertise: "",
@@ -22,16 +24,42 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     console.log(body)
-    const { userId, name, email, expertise, price, avatar, rating } = body;
+    const { userId, name, expertise, experience, price, avatar, rating } = body;
     console.log(userId)
     console.log(name)
-    // if (!userId) {
-    //   return unauthorizedResponse("Your account was not found");
-    // }
+    if (!name) {
+      return NextResponse.json({ message: "name is null" }, { status: 200 });
+    }
     //todo:
 
+    // const res = await prisma.interviewer.create({
+    //   data: {
+    //     name,
+    //     expertise,
+    //     experience,
+    //     price,
+    //     avatar,
+    //     rating,
+    //   }
+    // })
+    // 必须带唯一键
+    const data = {
+      price: 3,
+      name: name
+    }
+    const res = await prisma.interviewer.upsert({
+      where: { name: name },
+      update: data,
+      create: data
+    })
 
-    return NextResponse.json({ checkoutURL: "hello" }, { status: 200 });
+
+
+    console.log(res)
+    // const {id} = res
+
+
+    return NextResponse.json({ checkoutURL: res.id }, { status: 200 });
   } catch (error: any) {
     console.error('POST request failed:', error);
     return NextResponse.json({

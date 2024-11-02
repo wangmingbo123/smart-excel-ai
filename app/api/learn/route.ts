@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // import { Configuration, OpenAIApi } from 'openai-edge'; // runtime = 'edge'
-
+import prisma from "@/lib/prisma";
 
 
 interface Interviewer {

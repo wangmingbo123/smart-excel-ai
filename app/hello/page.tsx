@@ -23,12 +23,7 @@ const product = {
   name: "good1"
 }
 
-let content;
-if (isSHow) {
-  content = <h1>Welcome to my app {product.name}</h1>
-} else {
-  content = <h1>Welcome to  {product.name}</h1>
-}
+let  content = <h1>Welcome to my app {product.name}</h1>
 
 // export const ToastDemo = () => {
 //   const { toast } = useToast()

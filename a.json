@@ -1,0 +1,39 @@
+{
+  "ordersAndReviews": [
+    {
+      "id": 1,
+      "clientName": "John Doe",
+      "clientAvatar": "/placeholder.svg?height=50&width=50",
+      "date": "2023-05-15",
+      "rating": 5,
+      "review": "Alice was incredibly helpful! Her insights on React hooks and state management were invaluable. I feel much more confident for my upcoming interview."
+    },
+    {
+      "id": 2,
+      "clientName": "Jane Smith",
+      "clientAvatar": "/placeholder.svg?height=50&width=50",
+      "date": "2023-05-10",
+      "rating": 4,
+      "review": "Great session on CSS Grid and Flexbox. Alice explained complex concepts in a very understandable way. Looking forward to our next session!"
+    },
+    {
+      "id": 3,
+      "clientName": "Mike Johnson",
+      "clientAvatar": "/placeholder.svg?height=50&width=50",
+      "date": "2023-05-05",
+      "rating": 5,
+      "review": "Alice's mock interview was challenging and realistic. Her feedback was constructive and helped me identify areas for improvement. Highly recommended!"
+    }
+  ],
+  "interviewer": {
+    "id": 2,
+    "name": "Alice",
+    "expertise": "Data Science",
+    "experience": "3 years",
+    "price": 75,
+    "avatar": "/placeholder.svg?height=50&width=50",
+    "rating": 5,
+    "createdAt": "2024-11-02T07:39:32.331Z",
+    "updatedAt": "2024-11-02T07:39:32.331Z"
+  }
+}

@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 const orders = [
   {
     id: 1,
@@ -44,6 +46,6 @@ export async function GET(request: Request) {
   console.log(url)
   const queryParamValue = url.searchParams.get('userId') as string;
   console.log(queryParamValue)
-  
-  return Response.json({ orders: orders })
+
+  return NextResponse.json({ orders: orders })
 }

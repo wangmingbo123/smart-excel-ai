@@ -11,6 +11,17 @@ Content-Type: application/json
   "expertise": 1
 }
 
+###
+https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/add
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "interviewerId": 1,
+  "email": 1,
+  "expertise": 1
+}
+
 
 
 ###
@@ -18,6 +29,25 @@ POST https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/or
 Content-Type: application/json
 
 {
-  "userId": 2,
-  "interviewerId": 1
+  "userId": 1,
+  "interviewerId": 1,
+  "interviewerName": "Alice Johnson",
+  "interviewerAvatar": "/placeholder.svg?height=50&width=50",
+  "expertise": "Frontend Development",
+  "date": "2023-06-15",
+  "time": "14:00",
+  "duration": 60,
+  "price": 50,
+  "status": "Completed"
 }
+
+
+#查询我的订单列表
+
+###
+GET https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/orderList?userId=2
+
+
+
+###
+GET https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/orderDetail/3

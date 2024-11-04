@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+
+// prisma generate && prisma db push
 // 下单
 export async function POST(request: Request) {
   try {
@@ -7,8 +9,12 @@ export async function POST(request: Request) {
     console.log(body)
     const { userId, interviewerId } = body;
     console.log(userId)
-
-    return NextResponse.json({ message: "success" }, { status: 200 });
+    const resOrder = await prisma.order.create({
+      data: body
+    })
+    // todo:返回orderId
+    // return NextResponse.json({ message: "success", orderId: 1 }, { status: 200 });
+    return NextResponse.json({ message: "success", orderId: resOrder.id }, { status: 200 });
   } catch (error: any) {
     console.error('POST request failed:', error);
     return NextResponse.json({

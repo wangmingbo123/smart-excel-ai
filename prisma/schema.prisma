@@ -65,3 +65,20 @@ model Interviewer {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 }
+
+model Order {
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  interviewerId     Int
+  interviewerName   String?
+  interviewerAvatar String?
+  expertise         String?
+  date              String?
+  time              String?
+  duration          Int?
+  price             Int?
+  status            String?
+  reviewed          Int?     @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+}

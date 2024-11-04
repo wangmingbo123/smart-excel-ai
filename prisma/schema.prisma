@@ -59,7 +59,7 @@ model Interviewer {
   name       String   @unique
   expertise  String?
   experience String?
-  price      Int?
+  price      String?
   avatar     String? // github google
   rating     Int?
   createdAt  DateTime @default(now())

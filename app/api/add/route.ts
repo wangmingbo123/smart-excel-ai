@@ -44,8 +44,10 @@ export async function POST(request: Request) {
     // })
     // 必须带唯一键
     const data = {
-      price: 3,
-      name: name
+      name: body.name,
+      expertise: body.expertise,
+      experience: body.experience,
+      price: body.price
     }
     const res = await prisma.interviewer.upsert({
       where: { name: name },

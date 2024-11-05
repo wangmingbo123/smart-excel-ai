@@ -47,6 +47,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, account }) {
+      console.log("jwt start")
+      console.log(token)
+      console.log(account)
+      console.log("jwt end")
+
       // 登录(account仅登录那一次有值)
       // Only on sign in (account only has a value at that time)
       if (account) {
@@ -74,11 +79,18 @@ export const authOptions: NextAuthOptions = {
           membershipExpire: planRes.membershipExpire,
           accessToken: account.access_token
         }
+        console.log("fullUserInfo start")
+        console.log(fullUserInfo)
+        console.log("fullUserInfo end")
         return fullUserInfo
       }
       return token as any
     },
     async session({ session, token }) {
+      console.log("session start")
+      console.log(session)
+      console.log(token)
+      console.log("session end")
       // Append user information to the session
       if (token && token.userId) {
         session.user = await getSessionUser(token);

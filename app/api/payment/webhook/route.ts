@@ -1,4 +1,4 @@
-import { ONE_DAY, getSinglePayOrderKey } from "@/lib/constants";
+import { ONE_DAY, getInterviewerUidOrderKey, getSinglePayOrderKey } from "@/lib/constants";
 import { client } from "@/lib/lemonsqueezy/lemons";
 import prisma from "@/lib/prisma";
 import redis from "@/lib/redis";
@@ -48,6 +48,11 @@ export async function POST(request: Request) {
 
   const first_order_item = payload.data.attributes.first_order_item || null
 
+    // 面试官咨询相关逻辑
+    if (first_order_item && parseInt(first_order_item.variant_id, 10) === parseInt(process.env.LEMON_SQUEEZY_MEMBERSHIP_INTERVIEWER_VARIANT_ID as string, 10)) {
+      return await interviewerPay(first_order_item, payload, userId)
+    }
+
   // is one-off
   if (first_order_item && parseInt(first_order_item.variant_id, 10) === parseInt(process.env.LEMON_SQUEEZY_MEMBERSHIP_SINGLE_TIME_VARIANT_ID as string, 10)) {
     return await singlePayDeal(first_order_item, payload, userId)
@@ -56,6 +61,8 @@ export async function POST(request: Request) {
   if (!first_order_item && parseInt(payload.data.attributes.variant_id, 10) === parseInt(process.env.LEMON_SQUEEZY_MEMBERSHIP_MONTHLY_VARIANT_ID as string, 10)) {
     return await subscriptionDeal(payload, userId)
   }
+
+
 }
 
 const singlePayDeal = async (first_order_item: any, payload: any, userId: string) => {
@@ -157,4 +164,35 @@ const subscriptionDeal = async (payload: any, userId: string) => {
     console.log('subscription deal', e);
     return NextResponse.json({ message: 'subscription something wrong' }, { status: 500 });
   }
+}
+
+// 面试官逻辑
+// 订阅一次增加5次机会
+const interviewerPay = async (first_order_item: any, payload: any, userId: string) => {
+  try {
+    switch (payload.meta.event_name) {
+      case "order_created": {
+        /**
+         * Lemon Squeezy 可能推送多次，这里需要判断order是否已存在，相同order仅处理首次收到的推送
+         * 检查redis里有没有存这个order_id，如果没有，则调用boostPack和redis保存，如果有，则不处理，直接返回200
+         * 
+         * Lemon Squeezy might push multiple times; here we need to determine if the order already exists. The same order should only be processed on the first received push.
+         * Check if this order_id is stored in Redis. If not, call boostPack and save it in Redis. If it is, do not process, return 200 directly.
+         */
+        const key = getInterviewerUidOrderKey({ userId: userId })
+        const orderRedisRes = await redis.get(key)
+        console.log('interviewerPay', orderRedisRes);
+        await redis.incrby(key, 5)
+        return NextResponse.json({ status: 200 });
+      }
+
+      default: {
+        return NextResponse.json({ message: 'event_name not support' }, { status: 400 });
+      }
+    }
+  } catch (e) {
+    console.log('single pay deal', e);
+    return NextResponse.json({ message: 'single pay something wrong' }, { status: 500 });
+  }
+
 }

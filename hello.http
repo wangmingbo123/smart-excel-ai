@@ -51,3 +51,29 @@ GET https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/ord
 
 ###
 GET https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/orderDetail/3
+
+
+###
+GET https://smart-excel-ai-omega-six.vercel.app/api/auth/session
+
+
+
+# 根据__Secure-next-auth.session-token，可以拿到登录者信息 
+
+###
+GET  https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/user
+Content-Type: application/json
+
+
+{
+  "userId": 1,
+  "interviewerId": 1,
+  "interviewerName": "Alice Johnson",
+  "interviewerAvatar": "/placeholder.svg?height=50&width=50",
+  "expertise": "Frontend Development",
+  "date": "2023-06-15",
+  "time": "14:00",
+  "duration": 60,
+  "price": 50,
+  "status": "Completed"
+}

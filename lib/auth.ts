@@ -18,6 +18,9 @@ interface ExtendedToken extends TokenSet {
 const clientId = await get('GITHUB_ID');
 const clientSecret = await get('GITHUB_SECRET');
 
+// const clientId = "Ov23liR08tK52ejePKBA";
+// const clientSecret = "f7f26fb8f5944d6f73a30d8ea4113898a720d28e"
+
 console.log("clientId " + clientId)
 console.log("clientSecret " + clientSecret)
 

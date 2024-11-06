@@ -1,5 +1,7 @@
-import { NextResponse } from "next/server";
+import { getInterviewerUidOrderKey } from "@/lib/constants";
 import prisma from "@/lib/prisma";
+import redis from "@/lib/redis";
+import { NextResponse } from "next/server";
 
 
 // prisma generate && prisma db push
@@ -13,6 +15,18 @@ export async function POST(request: Request) {
     const resOrder = await prisma.order.create({
       data: body
     })
+    // 扣减库存
+    const key = getInterviewerUidOrderKey({ userId: userId.toString() })
+    console.log(key)
+    const numStr = await redis.get(key)
+    console.log("numStr " + numStr)
+    const num = numStr ? Number(numStr) : null;
+    if (num == null || num < 1) {
+      return NextResponse.json({ message: "error" }, { status: 200 });
+    }
+
+    redis.decrby(key, 1)
+
     // todo:返回orderId
     // return NextResponse.json({ message: "success", orderId: 1 }, { status: 200 });
     return NextResponse.json({ message: "success", orderId: resOrder.id }, { status: 200 });

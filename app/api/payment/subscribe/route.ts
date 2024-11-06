@@ -12,9 +12,9 @@ export async function POST(request: Request) {
   try {
     // 判断referer
     // Check the referer
-    if (!(await verifyReferer(request))) {
-      return unauthorizedResponse("Invalid referer.");
-    }
+    // if (!(await verifyReferer(request))) {
+    //   return unauthorizedResponse("Invalid referer.");
+    // }
     // 判断token是否存在
     // Verify if token exists
     const redisUserId: string | false = await verifyToken(request);
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       return unauthorizedResponse("Token validation failed. Please login again.");
     }
 
-    const { userId, type }: { userId: string, type: UpgradeType } = await request.json()
+    let { userId, type }: { userId: string, type: UpgradeType } = await request.json()
     if (!userId) {
       return unauthorizedResponse("Your account was not found");
     }
@@ -30,6 +30,7 @@ export async function POST(request: Request) {
     if (!type || !variantId) {
       return unauthorizedResponse("Your account was not found");
     }
+    userId = redisUserId;
 
     const user = await prisma.user.findUnique({
       where: { userId: userId.toString() },
@@ -60,7 +61,8 @@ export async function POST(request: Request) {
     )) as CreateCheckoutResult;
 
     console.log(checkout)
-    console.log(JSON.stringify(checkout))
+    // console.log(JSON.stringify(checkout))
+    console.log(checkout.data.attributes.url)
 
     return NextResponse.json({ checkoutURL: checkout.data.attributes.url }, { status: 200 });
   } catch (error: any) {
@@ -130,3 +132,7 @@ export async function DELETE(request: Request) {
     }, { status: 500 });
   }
 }
+
+
+// 面试咨询网站支付逻辑
+// todo

@@ -2,6 +2,7 @@ import redis from "@/lib/redis";
 
 export async function verifyReferer(request: Request) {
   const referer = request.headers.get('referer');
+  console.log(referer)
   if (!referer || !referer.includes(process.env.REFERER_MAIN_URL as string)) {
     return false;
   }

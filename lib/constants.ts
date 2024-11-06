@@ -45,8 +45,18 @@ export const SINGLE_VARIANT_KEY = 'single'
 export const VARIANT_IDS_BY_TYPE: VariantIdsByType = {
   'subscription': process.env.LEMON_SQUEEZY_MEMBERSHIP_MONTHLY_VARIANT_ID || '', // checkouts 请求传参要用string，但是webhook收到的variant_id是number
   'single': process.env.LEMON_SQUEEZY_MEMBERSHIP_SINGLE_TIME_VARIANT_ID || '',
+  'interviewer': process.env.LEMON_SQUEEZY_MEMBERSHIP_INTERVIEWER_VARIANT_ID || '',
 }
 // Function to generate a cache key for single payment orders.
 export const getSinglePayOrderKey = ({ identifier }: { identifier: string }) => {
   return `single_${identifier}`
+}
+
+export const getInterviewerPayOrderKey = ({ identifier }: { identifier: string }) => {
+  return `interviewer:${identifier}`
+}
+
+export const getInterviewerUidOrderKey = ({ userId }: { userId: string }) => {
+   return `uid:${userId}:interviewer`
+  // return `interviewer:${identifier}`
 }

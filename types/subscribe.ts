@@ -30,7 +30,7 @@ export interface SubScriptionInfo {
   updatePaymentMethodURL?: string;
   customerPortal?: string;
 }
-export type UpgradeType = 'subscription' | 'single';
+export type UpgradeType = 'subscription' | 'single' | 'interviewer';
 
 export type VariantIdsByType = {
   [key in UpgradeType]: string;

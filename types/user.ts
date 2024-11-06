@@ -22,6 +22,7 @@ export interface UserInfo {
   role: Role;
   membershipExpire?: number;
   accessToken?: string;
+  coin?: string;
 }
 
 export interface PrismaUser extends User { }

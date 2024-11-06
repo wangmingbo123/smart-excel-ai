@@ -10,7 +10,7 @@ export function middleware(request: Request) {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization,token,__Secure-next-auth.session-token',
       },
     });
     return NextResponse.next();

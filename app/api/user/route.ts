@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
 
     //
-    const key = getInterviewerPayOrderKey(user.userId);
+    const key = getInterviewerPayOrderKey({ identifier: user.userId });
     const numStr = await redis.get(key) as string
     user.coin = numStr
 

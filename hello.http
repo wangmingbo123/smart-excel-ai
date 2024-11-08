@@ -1,14 +1,28 @@
 # 需要安装 REST Client
 
 ###
-POST https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/add
+#POST https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/add
+POST  http://localhost:3001/api/add
 Content-Type: application/json
 
 {
-  "userId": 2,
-  "name": 1,
-  "email": 1,
-  "expertise": 1
+  "userId": "2",
+  "name": "1",
+  "email": "1",
+  "expertise": "1",
+  "skills": ["ux","mei"]
+}
+
+###
+GET  http://localhost:3001/api/interviewerDetail/17
+Content-Type: application/json
+
+{
+"userId": "2",
+"name": "1",
+"email": "1",
+"expertise": "1",
+"skills": ["ux","mei"]
 }
 
 ###
@@ -42,7 +56,7 @@ Content-Type: application/json
 }
 
 
-#查询我的订单列表
+//查询我的订单列表
 
 ###
 GET https://noxious-spooky-cauldron-v6rgv6j7xq9hwv6r-3000.app.github.dev/api/orderList?userId=2

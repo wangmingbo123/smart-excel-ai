@@ -18,6 +18,10 @@ interface Interviewer {
   price: number
   avatar: string
   rating: number
+  skills:   String[]
+  languages: String[]
+  availability: String[]
+  selfIntroduction:string
 }
 
 export async function POST(request: Request) {
@@ -47,7 +51,12 @@ export async function POST(request: Request) {
       name: body.name,
       expertise: body.expertise,
       experience: body.experience,
-      price: body.price
+      price: body.price,
+      avatar:body.avatar,
+      skills:body.skills,
+      languages:body.languages,
+      availability:body.availability,
+      selfIntroduction:body.selfIntroduction
     }
     const res = await prisma.interviewer.upsert({
       where: { name: name },
@@ -61,7 +70,7 @@ export async function POST(request: Request) {
     // const {id} = res
 
 
-    return NextResponse.json({ checkoutURL: res.id }, { status: 200 });
+    return NextResponse.json({ checkoutURL: res.id,id:res.id }, { status: 200 });
   } catch (error: any) {
     console.error('POST request failed:', error);
     return NextResponse.json({

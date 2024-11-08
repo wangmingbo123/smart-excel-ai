@@ -88,3 +88,14 @@ model Order {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now()) @updatedAt
 }
+
+model Review {
+  id            Int      @id @default(autoincrement())
+  orderId       String?   // 订单编号
+  rating        Int?      // 评分
+  reviewText    String?   // 评价文本
+  userId        String?   // 用户编号
+  interviewerId String?   // 面试官编号
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+}

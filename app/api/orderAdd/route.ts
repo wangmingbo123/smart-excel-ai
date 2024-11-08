@@ -2,6 +2,7 @@ import { getInterviewerUidOrderKey } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import redis from "@/lib/redis";
 import { NextResponse } from "next/server";
+import resendM from "@/lib/resend";
 
 
 // prisma generate && prisma db push
@@ -26,6 +27,17 @@ export async function POST(request: Request) {
     }
 
     redis.decrby(key, 1)
+    // 发送邮件
+    const interviewerRes = await prisma.interviewer.findUnique({
+      where: {
+        id: parseInt(interviewerId)
+      }
+    })
+    console.log("resendM email")
+    console.log(interviewerRes)
+    if (interviewerRes != null && interviewerRes.email) {
+      resendM(interviewerRes.email)
+    }
 
     // todo:返回orderId
     // return NextResponse.json({ message: "success", orderId: 1 }, { status: 200 });

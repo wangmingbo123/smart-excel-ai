@@ -1,4 +1,4 @@
-import {Resend} from 'resend';
+import {CreateEmailResponse, Resend} from 'resend';
 
 const resend = new Resend('re_WjGjSVRQ_HwtSbqJZKWdft8sBgjfjZCLT');
 const text =
@@ -15,8 +15,8 @@ const text =
     "祝您求职顺利，事业有成！"
 
 
-const resendM = (to:string) => {
-    resend.emails.send({
+const resendM = async (to:string) => {
+    const  createEmailResponse = await  resend.emails.send({
         from: 'onboarding@resend.dev',
         // to: '1445260526@qq.com',
         to: to,
@@ -24,7 +24,8 @@ const resendM = (to:string) => {
         // html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
         text: text,
     });
-
+    console.log("createEmailResponse")
+    console.log(createEmailResponse)
 }
 
 // resendM("1445260526@qq.com")

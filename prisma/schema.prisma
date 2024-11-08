@@ -66,6 +66,8 @@ model Interviewer {
   languages String[] @default([])
   availability String[] @default([])
   selfIntroduction String?
+  email String?
+  phone String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 }

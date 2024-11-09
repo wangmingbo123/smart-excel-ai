@@ -1,4 +1,4 @@
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
 
@@ -49,7 +49,7 @@ const ordersAndReviews = [
 
 export async function GET(
     request: Request,
-    {params}: { params: Promise<{ slug: string }> }
+    { params }: { params: Promise<{ slug: string }> }
 ) {
     const slug = (await params).slug // 'a', 'b', or 'c'
     console.log(slug)
@@ -59,50 +59,6 @@ export async function GET(
         }
     })
     console.log(interviewerRes)
-    // order
-    let ordersAndReviewsInfo = []
-    try {
-        const orders = await getOrdersByInterviewerId(interviewerRes?.id);
-        ordersAndReviewsInfo = orders?.map(async order => {
-            order.clientName = order.interviewerName;
-            order.clientAvatar = order.interviewerAvatar;
-            const reviews = await getReviewByOrderId(String(order.id));
-            if (reviews && reviews.length>0) {
-                order.rating = reviews[0].rating
-                order.review = reviews[0].reviewText
-            }
-        })
-    } catch (e) {
-        console.log(e)
-    }
 
-    return NextResponse.json({ordersAndReviews: ordersAndReviewsInfo, interviewer: interviewerRes}, {status: 200});
-}
-
-async function getOrdersByInterviewerId(interviewerId: number | null | undefined) {
-    if (!interviewerId) {
-        return []
-    }
-
-    return prisma.order.findMany({
-        where: {
-            interviewerId: interviewerId,
-        },
-        orderBy: {
-            // 假设更新时间字段名为 updatedAt，如果你的字段名不同请相应调整
-            updatedAt: 'desc',
-        },
-    });
-}
-
-async function getReviewByOrderId(orderId: string | null | undefined) {
-    if (!orderId) {
-        return
-    }
-
-    return prisma.review.findMany({
-        where: {
-            orderId: orderId,
-        }
-    });
+    return NextResponse.json({ ordersAndReviews: ordersAndReviews, interviewer: interviewerRes }, { status: 200 });
 }

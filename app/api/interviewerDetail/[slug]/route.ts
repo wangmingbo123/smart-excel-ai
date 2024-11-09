@@ -1,6 +1,8 @@
 import {NextResponse} from "next/server";
 
 import prisma from "@/lib/prisma";
+import {getInterviewerUidOrderKey} from "@/lib/constants";
+import redis from "@/lib/redis";
 
 // Mock data for the interviewer
 const interviewer = {
@@ -17,6 +19,7 @@ const interviewer = {
     availability: "Weekdays 9 AM - 5 PM EST",
     rating: 4.8,
     reviewCount: 47,
+    coinNum:0
 }
 
 // Mock data for orders and reviews
@@ -67,6 +70,19 @@ export async function GET(
             id: parseInt(slug)
         }
     })
+
+    // 登录者库存
+    const url = new URL(request.url);
+    console.log(url)
+    const userId = url.searchParams.get('userId') as string;
+    const key = getInterviewerUidOrderKey({ userId: userId })
+    console.log(key)
+    const numStr = await redis.get(key)
+    console.log("numStr " + numStr)
+
+    // @ts-ignore
+    interviewerRes.coinNum=numStr;
+
     console.log(interviewerRes)
     // order
     let ordersAndReviewsInfo:OrdersAndReview[] = []

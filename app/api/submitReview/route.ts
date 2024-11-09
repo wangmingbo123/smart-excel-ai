@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         })
         // 更新订单状态
         const updatedOrder = await prisma.order.update({
-            where: { id: orderId },
+            where: { id: parseInt(orderId) },
             data: {
                 reviewed: 1 ,
                 status:"Reviewed"

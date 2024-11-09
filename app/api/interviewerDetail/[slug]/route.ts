@@ -47,6 +47,15 @@ const ordersAndReviews = [
     },
 ]
 
+interface OrdersAndReview {
+    id: number,
+    clientName: string,
+    clientAvatar: string,
+    date: string,
+    rating: number,
+    review: string
+}
+
 export async function GET(
     request: Request,
     {params}: { params: Promise<{ slug: string }> }
@@ -60,18 +69,24 @@ export async function GET(
     })
     console.log(interviewerRes)
     // order
-    let ordersAndReviewsInfo = []
+    let ordersAndReviewsInfo:OrdersAndReview[] = []
     try {
         const orders = await getOrdersByInterviewerId(interviewerRes?.id);
-        ordersAndReviewsInfo = orders?.map(async order => {
-            order.clientName = order.interviewerName;
-            order.clientAvatar = order.interviewerAvatar;
+        for (let order of orders) {
             const reviews = await getReviewByOrderId(String(order.id));
-            if (reviews && reviews.length>0) {
-                order.rating = reviews[0].rating
-                order.review = reviews[0].reviewText
+            let ordersAndReview:OrdersAndReview ={
+                id:order.id,
+                // @ts-ignore
+                clientName : order.interviewerName,
+                // @ts-ignore
+                clientAvatar : order.interviewerAvatar,
+                // @ts-ignore
+                rating: reviews?.rating,
+                // @ts-ignore
+                review:reviews?.reviewText
             }
-        })
+            ordersAndReviewsInfo.push(ordersAndReview)
+        }
     } catch (e) {
         console.log(e)
     }
@@ -95,14 +110,14 @@ async function getOrdersByInterviewerId(interviewerId: number | null | undefined
     });
 }
 
-async function getReviewByOrderId(orderId: string | null | undefined) {
-    if (!orderId) {
-        return
-    }
-
-    return prisma.review.findMany({
-        where: {
-            orderId: orderId,
-        }
-    });
-}
+ async function getReviewByOrderId(orderId: string | null | undefined) {
+     if (!orderId) {
+         return
+     }
+     const reviews = await prisma.review.findMany({
+         where: {
+             orderId: orderId,
+         }
+     });
+     return reviews?reviews[0]:null
+ }

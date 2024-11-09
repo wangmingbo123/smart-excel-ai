@@ -15,6 +15,16 @@ export async function POST(request: Request) {
         const resReview = await prisma.review.create({
             data: body
         })
+        // 更新订单状态
+        const updatedOrder = await prisma.order.update({
+            where: { id: orderId },
+            data: {
+                reviewed: 1 ,
+                status:"Reviewed"
+            },
+        });
+        console.log(updatedOrder)
+
         return NextResponse.json({message: "success", orderId: resReview.id}, {status: 200});
     } catch (error: any) {
         console.error('POST request failed:', error);

@@ -81,9 +81,9 @@ export async function GET(
                 // @ts-ignore
                 clientAvatar : order.interviewerAvatar,
                 // @ts-ignore
-                rating: reviews?.rating,
+                rating: reviews?reviews.rating:0,
                 // @ts-ignore
-                review:reviews?.reviewText
+                review:reviews?reviews.reviewText:"用户还未评价"
             }
             ordersAndReviewsInfo.push(ordersAndReview)
         }

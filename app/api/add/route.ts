@@ -48,6 +48,7 @@ export async function POST(request: Request) {
     // })
     // 必须带唯一键
     const data = {
+      userId: body.userId,
       name: body.name,
       expertise: body.expertise,
       experience: body.experience,

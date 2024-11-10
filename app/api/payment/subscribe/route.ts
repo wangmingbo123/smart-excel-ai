@@ -17,10 +17,11 @@ export async function POST(request: Request) {
     // }
     // 判断token是否存在
     // Verify if token exists
-    const redisUserId: string | false = await verifyToken(request);
-    if (!redisUserId) {
-      return unauthorizedResponse("Token validation failed. Please login again.");
-    }
+    // todo
+    // const redisUserId: string | false = await verifyToken(request);
+    // if (!redisUserId) {
+    //   return unauthorizedResponse("Token validation failed. Please login again.");
+    // }
 
     let { userId, type }: { userId: string, type: UpgradeType } = await request.json()
     if (!userId) {
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
     if (!type || !variantId) {
       return unauthorizedResponse("Your account was not found");
     }
-    userId = redisUserId;
+    // userId = redisUserId;
 
     const user = await prisma.user.findUnique({
       where: { userId: userId.toString() },

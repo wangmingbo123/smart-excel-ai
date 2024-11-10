@@ -37,24 +37,26 @@ export async function POST(request: Request) {
 // 获得登录者信息
 export async function GET(request: Request) {
   try {
-    const token = request.headers.get("token")
+    const token = request.headers.get("token") as string
+    console.log("token is ")
+    console.log(token)
 
 
     let user = await getCurrentUser() as UserInfo
-    console.log(user)
+    // console.log(user)
     // if (!user) {
     //   return NextResponse.json({ message: "error" }, { status: 200 });
     // }
 
 
     //
-    const key = getInterviewerUidOrderKey({ userId: "14872046" });
+    const key = getInterviewerUidOrderKey({ userId: token });
     const numStr = await redis.get(key) as string
     // if (!user) {
     //   user.coin = numStr
     // }
     const user1 = {
-      userId: "14872046",
+      userId: token,
       coin: numStr
     }
 

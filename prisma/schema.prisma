@@ -65,6 +65,7 @@ model Interviewer {
   skills   String[] @default([])
   languages String[] @default([])
   availability String[] @default([])
+  images String[] @default([])
   selfIntroduction String?
   email String?
   phone String?

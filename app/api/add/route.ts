@@ -59,6 +59,7 @@ export async function POST(request: Request) {
       selfIntroduction:body.selfIntroduction,
       email:body.email,
       phone:body.phone,
+      images:body.images
     }
     const res = await prisma.interviewer.upsert({
       where: { name: name },

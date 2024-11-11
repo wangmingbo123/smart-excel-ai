@@ -42,5 +42,5 @@ next-env.d.ts
 .contentlayer
 postgres
 
-package-lock.json
+#package-lock.json
 public/sitemap-0.xml

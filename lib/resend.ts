@@ -15,18 +15,37 @@ const text =
     "祝您求职顺利，事业有成！"
 
 
-const resendM = async (to:string) => {
+
+// const websiteUrl ="http://localhost:3000";
+const websiteUrl =`${process.env.NEXT_PUBLIC_APP_URL}`?? "http://localhost:3000";
+
+console.log(websiteUrl);
+
+//      from: 'anyone@interviewer.site',
+//      这里需要绑定域名才可以 在resend 平台
+
+const resendM = async (to:string,name:string) => {
+    // 邮件内容
+    const emailContent = `
+            <h1>Hello ${name},</h1>
+            <p>Thank you for visiting our website: <a href="${websiteUrl}">${websiteUrl}</a>.</p>
+            <p>Best regards,<br>Your Company</p>
+        `;
+
     const  createEmailResponse = await  resend.emails.send({
-        from: 'onboarding@resend.dev',
+        // from: 'onboarding@resend.dev',
+        from: 'anyone@interviewer.site',
         // to: '1445260526@qq.com',
         to: to,
         subject: 'Hello World',
         // html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-        text: text,
+        // text: text,
+        html: emailContent,
     });
     console.log("createEmailResponse")
     console.log(createEmailResponse)
 }
 
-// resendM("1445260526@qq.com")
+// resendM("1445260526@qq.com","wang")
+// resendM("118804637910@163.com")
 export default resendM

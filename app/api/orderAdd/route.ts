@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     console.log("resendM email")
     console.log(interviewerRes)
     if (interviewerRes != null && interviewerRes.email) {
-      await resendM(interviewerRes.email)
+      await resendM(interviewerRes.email,interviewerRes.name)
     }
 
     // todo:返回orderId

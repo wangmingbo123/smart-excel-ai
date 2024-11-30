@@ -101,3 +101,26 @@ model Review {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now()) @updatedAt
 }
+
+
+// im 相关表
+model Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userIds   String[] @default([])
+}
+
+// 添加普通索引
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  roomId    String
+
+  @@index([roomId])
+  @@index([userId])
+}

@@ -76,7 +76,7 @@ model Interviewer {
 
 model Order {
   id                Int      @id @default(autoincrement())
-  userId            Int
+  userId            String
   interviewerId     Int
   interviewerName   String?
   interviewerAvatar String?

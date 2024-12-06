@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const body = await request.json()
     console.log(body)
     const { userId, interviewerId } = body;
-    console.log(userId)
+    console.log(userId,typeof userId)
     const resOrder = await prisma.order.create({
       data: body
     })

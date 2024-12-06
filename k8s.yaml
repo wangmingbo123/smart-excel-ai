@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: SmartExcel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: SmartExcel
+  template:
+    metadata:
+      labels:
+        app: SmartExcel
+    spec:
+      containers:
+        - name: SmartExcel
+          image: wangyuyu/smart-excel:latest
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: SmartExcel
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001  # 可选，指定 NodePort
+  selector:
+    app: SmartExcel

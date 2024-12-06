@@ -41,7 +41,7 @@ const orders1 = [
   },
 ]
 
-async function getOrdersByUserId(userId: number) {
+async function getOrdersByUserId(userId: string) {
   return prisma.order.findMany({
     where: {
       userId: userId,
@@ -58,6 +58,6 @@ export async function GET(request: Request) {
   console.log(url)
   const userId = url.searchParams.get('userId') as string;
   console.log(userId)
-  const orders = await getOrdersByUserId(parseInt(userId))
+  const orders = await getOrdersByUserId(userId)
   return NextResponse.json({ orders: orders })
 }
